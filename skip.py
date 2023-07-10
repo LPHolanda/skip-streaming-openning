@@ -6,14 +6,13 @@ from kivy.properties import ObjectProperty
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.core.window import Window
+from popup import open_popup
 
 count = 0
 run = True
 streaming = ''
 
 pyautogui.useImageNotFoundException()
-
-GUI = Builder.load_file("skip.kv")
 
 class Screen(GridLayout):
     btn = ObjectProperty(None)
@@ -57,10 +56,14 @@ class Screen(GridLayout):
         global streaming
         streaming = instance.text
 
-
     def autoplay(self, instance):
         global run
         global streaming
+
+        if not streaming:
+            open_popup()
+            return
+
         while run:
             global count 
             count = count+1
